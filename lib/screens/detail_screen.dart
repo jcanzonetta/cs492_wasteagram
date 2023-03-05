@@ -41,7 +41,7 @@ class DetailScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(post.number.toString()),
+            child: Text('Food wasted: ${post.number}'),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
