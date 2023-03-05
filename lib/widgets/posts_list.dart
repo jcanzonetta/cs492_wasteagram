@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:wasteagram/models/food_waste_post.dart';
+import 'package:wasteagram/screens/detail_screen.dart';
 
 class PostsList extends StatefulWidget {
   @override
@@ -17,11 +19,17 @@ class _PostsListState extends State<PostsList> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              var post = snapshot.data!.docs[index];
-              return ListTile(
-                title:
-                    Text(DateFormat.yMMMMEEEEd().format(post['date'].toDate())),
-                trailing: Text(post['number'].toString()),
+              FoodWastePost post =
+                  FoodWastePost.fromFirestore(snapshot.data!.docs[index]);
+              return Card(
+                child: ListTile(
+                  title: Text(DateFormat.yMMMMEEEEd().format(post.date)),
+                  trailing: Text(post.number.toString()),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(DetailScreen.routeName, arguments: post);
+                  },
+                ),
               );
             },
           );

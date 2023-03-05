@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wasteagram/app.dart';
-
 import '../widgets/posts_list.dart';
 
 class ListScreen extends StatelessWidget {
