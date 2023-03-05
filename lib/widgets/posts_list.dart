@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PostsList extends StatefulWidget {
   @override
@@ -18,7 +19,8 @@ class _PostsListState extends State<PostsList> {
             itemBuilder: (context, index) {
               var post = snapshot.data!.docs[index];
               return ListTile(
-                title: Text(post['date']),
+                title:
+                    Text(DateFormat.yMMMMEEEEd().format(post['date'].toDate())),
                 trailing: Text(post['number'].toString()),
               );
             },
@@ -30,3 +32,5 @@ class _PostsListState extends State<PostsList> {
     );
   }
 }
+
+// String formatTimeStamp(Timestamp timestamp) {var format = DateFormat()}
