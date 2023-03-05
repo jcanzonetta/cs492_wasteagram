@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:wasteagram/app.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
 
@@ -14,10 +16,37 @@ class DetailScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Wasteagram')),
       body: Column(
         children: [
-          Text(DateFormat.yMMMMEEEEd().format(post.date)),
-          const Placeholder(),
-          Text(post.number.toString()),
-          Text('Location: (${post.lat}, ${post.long})')
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(DateFormat.yMMMMEEEEd().format(post.date)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.network(
+              post.photoURL,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null),
+                  );
+                }
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(post.number.toString()),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Location: (${post.lat}, ${post.long})'),
+          )
         ],
       ),
     );
