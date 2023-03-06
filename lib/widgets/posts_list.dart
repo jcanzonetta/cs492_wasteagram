@@ -23,7 +23,7 @@ class _PostsListState extends State<PostsList> {
                   FoodWastePost.fromFirestore(snapshot.data!.docs[index]);
               return Card(
                 child: ListTile(
-                  title: Text(DateFormat.yMMMMEEEEd().format(post.date)),
+                  title: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
                   trailing: Text(post.number.toString()),
                   onTap: () {
                     Navigator.of(context)

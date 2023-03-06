@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:wasteagram/app.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
 
 class DetailScreen extends StatelessWidget {
   static const routeName = 'DetailScreen';
+
+  const DetailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final FoodWastePost post =
@@ -18,12 +20,12 @@ class DetailScreen extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(DateFormat.yMMMMEEEEd().format(post.date)),
+            child: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.network(
-              post.photoURL,
+              post.photoURL!,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
