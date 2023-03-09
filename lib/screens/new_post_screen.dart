@@ -91,9 +91,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     foodWastePostValues.long = locationData.longitude;
 
                     // Save the entry to Firestore
-                    DocumentReference result = await FirebaseFirestore.instance
-                        .collection('posts')
-                        .add({
+                    FirebaseFirestore.instance.collection('posts').add({
                       'date': foodWastePostValues.date,
                       'lat': foodWastePostValues.lat,
                       'long': foodWastePostValues.long,

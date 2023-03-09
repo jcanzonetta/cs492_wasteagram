@@ -32,6 +32,7 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Wasteagram')),
       body: PostsList(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.photo),
         onPressed: () async {
