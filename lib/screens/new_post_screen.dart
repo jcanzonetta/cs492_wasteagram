@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:location/location.dart';
 
 import 'package:wasteagram/models/food_waste_post.dart';
 import 'package:wasteagram/widgets/submit_button.dart';
@@ -20,16 +21,42 @@ class _NewPostScreenState extends State<NewPostScreen> {
   final foodWastePostValues = FoodWastePost();
 
   @override
-  Widget build(BuildContext context) {
-    final File image = ModalRoute.of(context)!.settings.arguments as File;
+  void initState() {
+    super.initState();
+    initializeLocation();
+  }
 
-    Widget newPostImage() {
-      if (image == null) {
-        return const Text('Select an image');
-      } else {
-        return Image.file(image);
+  void initializeLocation() async {
+    Location location = Location();
+
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    serviceEnabled = await location.serviceEnabled();
+
+    // Check if service is enabled.
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        if (!mounted) return;
+        Navigator.of(context).pop();
       }
     }
+
+    // Check if presmission is granted.
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        if (!mounted) return;
+        Navigator.of(context)
+            .pop("You need to grant Location permissions in order to post.");
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final File image = ModalRoute.of(context)!.settings.arguments as File;
 
     return Scaffold(
         appBar: AppBar(title: const Text('New Post')),
@@ -39,25 +66,32 @@ class _NewPostScreenState extends State<NewPostScreen> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              newPostImage(),
-              TextFormField(
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      labelText: 'Number of Wasted Items',
-                      border: OutlineInputBorder()),
-                  onSaved: (newValue) {
-                    foodWastePostValues.quantity = int.parse(newValue!);
-                  },
-                  validator: (newValue) {
-                    if (newValue?.isEmpty ?? true) {
-                      return 'Please enter the number of food items wated.';
-                    } else if (int.parse(newValue!) <= 0) {
-                      return 'The number of itmes wasted must be greater than 0.';
-                    } else {
-                      return null;
-                    }
-                  }),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.file(image),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    maxLength: 3,
+                    decoration: const InputDecoration(
+                        labelText: 'Number of Wasted Items',
+                        border: OutlineInputBorder()),
+                    onSaved: (newValue) {
+                      foodWastePostValues.quantity = int.parse(newValue!);
+                    },
+                    validator: (newValue) {
+                      if (newValue?.isEmpty ?? true) {
+                        return 'Please enter the number of food items wated.';
+                      } else if (int.parse(newValue!) <= 0) {
+                        return 'The number of itmes wasted must be greater than 0.';
+                      } else {
+                        return null;
+                      }
+                    }),
+              ),
               SubmitButton(
                   formKey: formKey,
                   image: image,

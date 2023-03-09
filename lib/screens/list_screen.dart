@@ -31,7 +31,13 @@ class _ListScreenState extends State<ListScreen> {
     }
 
     if (!mounted) return;
-    Navigator.of(context).pushNamed(NewPostScreen.routeName, arguments: image);
+    final result = await Navigator.pushNamed(context, NewPostScreen.routeName,
+        arguments: image);
+
+    if (result == null) return;
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(result as String)));
   }
 
   @override
