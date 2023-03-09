@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:wasteagram/screens/new_post_screen.dart';
@@ -17,11 +18,17 @@ class _ListScreenState extends State<ListScreen> {
   File? image;
 
   void getImage() async {
-    // Get image from device.
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    try {
+      // Get image from device.
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    image = File(pickedImage!.path);
+      if (pickedImage == null) return;
+
+      image = File(pickedImage.path);
+    } on PlatformException catch (error) {
+      print('Unable to get image: $error');
+    }
 
     if (!mounted) return;
     Navigator.of(context).pushNamed(NewPostScreen.routeName, arguments: image);
