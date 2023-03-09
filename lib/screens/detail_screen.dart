@@ -25,7 +25,7 @@ class DetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Image.network(
-              post.photoURL!,
+              post.imageURL!,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
@@ -43,11 +43,11 @@ class DetailScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('Food wasted: ${post.number}'),
+            child: Text('Food wasted: ${post.quantity}'),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('Location: (${post.lat}, ${post.long})'),
+            child: Text('Location: (${post.latitude}, ${post.longitude})'),
           )
         ],
       ),

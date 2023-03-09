@@ -27,7 +27,7 @@ class _PostsListState extends State<PostsList> {
               return Card(
                 child: ListTile(
                   title: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
-                  trailing: Text(post.number.toString()),
+                  trailing: Text(post.quantity.toString()),
                   onTap: () {
                     Navigator.of(context)
                         .pushNamed(DetailScreen.routeName, arguments: post);

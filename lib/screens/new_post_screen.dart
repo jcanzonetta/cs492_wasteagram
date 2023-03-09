@@ -49,7 +49,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       labelText: 'Number of Wasted Items',
                       border: OutlineInputBorder()),
                   onSaved: (newValue) {
-                    foodWastePostValues.number = int.parse(newValue!);
+                    foodWastePostValues.quantity = int.parse(newValue!);
                   },
                   validator: (newValue) {
                     if (newValue?.isEmpty ?? true) {
@@ -82,21 +82,21 @@ class _NewPostScreenState extends State<NewPostScreen> {
 
                     // Receive url of photo and add it to the entry
                     var photoUrl = await storageReference.getDownloadURL();
-                    foodWastePostValues.photoURL = photoUrl;
+                    foodWastePostValues.imageURL = photoUrl;
 
                     // Get the lat and long and save it to the entry
                     var locationService = Location();
                     var locationData = await locationService.getLocation();
-                    foodWastePostValues.lat = locationData.latitude;
-                    foodWastePostValues.long = locationData.longitude;
+                    foodWastePostValues.latitude = locationData.latitude;
+                    foodWastePostValues.longitude = locationData.longitude;
 
                     // Save the entry to Firestore
                     FirebaseFirestore.instance.collection('posts').add({
                       'date': foodWastePostValues.date,
-                      'lat': foodWastePostValues.lat,
-                      'long': foodWastePostValues.long,
-                      'number': foodWastePostValues.number,
-                      'photoURL': foodWastePostValues.photoURL
+                      'lat': foodWastePostValues.latitude,
+                      'long': foodWastePostValues.longitude,
+                      'number': foodWastePostValues.quantity,
+                      'photoURL': foodWastePostValues.imageURL
                     });
 
                     // Return to previous screen
