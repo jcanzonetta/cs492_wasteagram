@@ -1,11 +1,10 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:location/location.dart';
+
 import 'package:wasteagram/models/food_waste_post.dart';
+import 'package:wasteagram/widgets/submit_button.dart';
 
 class NewPostScreen extends StatefulWidget {
   static const String routeName = 'NewPostScreen';
@@ -19,7 +18,6 @@ class NewPostScreen extends StatefulWidget {
 class _NewPostScreenState extends State<NewPostScreen> {
   final formKey = GlobalKey<FormState>();
   final foodWastePostValues = FoodWastePost();
-  bool _uploadingPost = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,61 +58,10 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       return null;
                     }
                   }),
-              ElevatedButton.icon(
-                onPressed: () async {
-                  if (formKey.currentState?.validate() ?? true) {
-                    setState(() {
-                      _uploadingPost = true;
-                    });
-
-                    formKey.currentState!.save();
-
-                    // Get today's date and save it to the entry
-                    foodWastePostValues.date = DateTime.now();
-
-                    // Upload image to Firestore
-                    String fileName = '${foodWastePostValues.date}.jpg';
-                    Reference storageReference =
-                        FirebaseStorage.instance.ref().child(fileName);
-
-                    UploadTask uploadTask = storageReference.putFile(image!);
-                    await uploadTask;
-
-                    // Receive url of photo and add it to the entry
-                    var photoUrl = await storageReference.getDownloadURL();
-                    foodWastePostValues.imageURL = photoUrl;
-
-                    // Get the lat and long and save it to the entry
-                    var locationService = Location();
-                    var locationData = await locationService.getLocation();
-                    foodWastePostValues.latitude = locationData.latitude;
-                    foodWastePostValues.longitude = locationData.longitude;
-
-                    // Save the entry to Firestore
-                    FirebaseFirestore.instance.collection('posts').add({
-                      'date': foodWastePostValues.date,
-                      'lat': foodWastePostValues.latitude,
-                      'long': foodWastePostValues.longitude,
-                      'number': foodWastePostValues.quantity,
-                      'photoURL': foodWastePostValues.imageURL
-                    });
-
-                    // Return to previous screen
-                    if (!mounted) return;
-                    Navigator.of(context).pop();
-                  }
-                },
-                icon: _uploadingPost
-                    ? Transform.scale(
-                        scale: 0.5,
-                        child: const CircularProgressIndicator(
-                            color: Colors.white),
-                      )
-                    : Container(
-                        padding: EdgeInsets.all(2.0),
-                        child: const Icon(Icons.cloud_circle)),
-                label: const Text('Upload'),
-              )
+              SubmitButton(
+                  formKey: formKey,
+                  image: image,
+                  foodWastePostValues: foodWastePostValues),
             ],
           )),
         ));
