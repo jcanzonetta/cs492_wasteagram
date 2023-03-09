@@ -85,10 +85,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       foodWastePostValues.lat = locationData.latitude;
                       foodWastePostValues.long = locationData.longitude;
 
-                      // Create the title
-                      final title =
-                          '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}';
-
                       // Save the entry to Firestore
                       FirebaseFirestore.instance.collection('posts').add({
                         'date': foodWastePostValues.date,
@@ -97,6 +93,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                         'number': foodWastePostValues.number,
                         'photoURL': foodWastePostValues.photoURL
                       });
+
                       // Return to previous screen
                       if (!mounted) return;
                       Navigator.of(context).pop();
