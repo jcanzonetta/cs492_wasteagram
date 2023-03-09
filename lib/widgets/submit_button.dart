@@ -43,7 +43,7 @@ class _SubmitButtonState extends State<SubmitButton> {
           Reference storageReference =
               FirebaseStorage.instance.ref().child(fileName);
 
-          UploadTask uploadTask = storageReference.putFile(widget.image!);
+          UploadTask uploadTask = storageReference.putFile(widget.image);
           await uploadTask;
 
           // Receive url of photo and add it to the entry

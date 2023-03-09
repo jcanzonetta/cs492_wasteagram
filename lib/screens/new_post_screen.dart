@@ -27,7 +27,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
       if (image == null) {
         return const Text('Select an image');
       } else {
-        return Image.file(image!);
+        return Image.file(image);
       }
     }
 
