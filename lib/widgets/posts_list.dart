@@ -36,6 +36,10 @@ class _PostsListState extends State<PostsList> {
               );
             },
           );
+        } else if (snapshot.hasData && snapshot.data!.docs.isEmpty) {
+          return const Center(
+            child: Text("No one has posted anything yet."),
+          );
         } else {
           return const Center(child: CircularProgressIndicator());
         }

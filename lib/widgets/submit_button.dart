@@ -30,6 +30,10 @@ class _SubmitButtonState extends State<SubmitButton> {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton.icon(
         onPressed: () async {
+          if (_uploadingPost) {
+            return;
+          }
+
           if (widget.formKey.currentState?.validate() ?? true) {
             setState(() {
               _uploadingPost = true;
