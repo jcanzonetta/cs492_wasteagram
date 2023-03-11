@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 import 'package:wasteagram/models/food_waste_post.dart';
 
+import '../widgets/food_waste_image.dart';
+
 class DetailScreen extends StatelessWidget {
   static const routeName = 'DetailScreen';
 
@@ -21,25 +23,7 @@ class DetailScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.network(
-              post.imageURL!,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) {
-                  return child;
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null),
-                  );
-                }
-              },
-            ),
-          ),
+          FoodWasteImage(post: post),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text('Food wasted: ${post.quantity}'),

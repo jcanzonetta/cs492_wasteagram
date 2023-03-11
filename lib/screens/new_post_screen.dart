@@ -7,6 +7,8 @@ import 'package:location/location.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
 import 'package:wasteagram/widgets/submit_button.dart';
 
+import '../widgets/number_form_field.dart';
+
 class NewPostScreen extends StatefulWidget {
   static const String routeName = 'NewPostScreen';
 
@@ -70,28 +72,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Image.file(image),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    maxLength: 3,
-                    decoration: const InputDecoration(
-                        labelText: 'Number of Wasted Items',
-                        border: OutlineInputBorder()),
-                    onSaved: (newValue) {
-                      foodWastePostValues.quantity = int.parse(newValue!);
-                    },
-                    validator: (newValue) {
-                      if (newValue?.isEmpty ?? true) {
-                        return 'Please enter the number of food items wated.';
-                      } else if (int.parse(newValue!) <= 0) {
-                        return 'The number of itmes wasted must be greater than 0.';
-                      } else {
-                        return null;
-                      }
-                    }),
-              ),
+              NumberFormField(foodWastePostValues: foodWastePostValues),
               SubmitButton(
                   formKey: formKey,
                   image: image,
