@@ -29,9 +29,10 @@ class _SubmitButtonState extends State<SubmitButton> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Semantics(
+        label: 'Submit Button',
         button: true,
         enabled: !_uploadingPost,
-        onTapHint: "Submit the post.",
+        onTapHint: 'Submits the post to Wasteagram. Cannot be undone.',
         child: ElevatedButton.icon(
           onPressed: () async {
             if (_uploadingPost) {
