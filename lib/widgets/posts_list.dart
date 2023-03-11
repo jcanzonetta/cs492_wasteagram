@@ -25,13 +25,18 @@ class _PostsListState extends State<PostsList> {
               FoodWastePost post =
                   FoodWastePost.fromFirestore(snapshot.data!.docs[index]);
               return Card(
-                child: ListTile(
-                  title: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
-                  trailing: Text(post.quantity.toString()),
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(DetailScreen.routeName, arguments: post);
-                  },
+                child: Semantics(
+                  label: 'A card for a Wasteagram post with date and number of '
+                      'wasted items.',
+                  onTapHint: 'Shows details for the selected post.',
+                  child: ListTile(
+                    title: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
+                    trailing: Text(post.quantity.toString()),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(DetailScreen.routeName, arguments: post);
+                    },
+                  ),
                 ),
               );
             },
