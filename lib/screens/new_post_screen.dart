@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 
 import 'package:wasteagram/models/food_waste_post.dart';
@@ -50,8 +49,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
         if (!mounted) return;
-        Navigator.of(context)
-            .pop("You need to grant Location permissions in order to post.");
+        Navigator.of(context).pop(
+            "You need to grant Precise Location permissions in order to post.");
       }
     }
   }

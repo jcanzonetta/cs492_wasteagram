@@ -22,8 +22,8 @@ class _PostsListState extends State<PostsList> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              FoodWastePost post =
-                  FoodWastePost.fromFirestore(snapshot.data!.docs[index]);
+              FoodWastePost post = FoodWastePost.fromFirestore(
+                  snapshot.data!.docs[index].data() as Map);
               return Card(
                 child: Semantics(
                   label: 'A card for a Wasteagram post with date and number of '

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class FoodWastePost {
   DateTime? date;
   double? latitude;
@@ -10,7 +8,7 @@ class FoodWastePost {
   FoodWastePost(
       {this.date, this.latitude, this.longitude, this.quantity, this.imageURL});
 
-  factory FoodWastePost.fromFirestore(QueryDocumentSnapshot<Object?> post) {
+  factory FoodWastePost.fromFirestore(Map post) {
     return FoodWastePost(
         date: post['date'].toDate(),
         latitude: post['latitude'],

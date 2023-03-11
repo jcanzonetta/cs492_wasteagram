@@ -8,7 +8,7 @@ class App extends StatelessWidget {
   static final routes = {
     ListScreen.routeName: (context) => ListScreen(),
     NewPostScreen.routeName: (context) => NewPostScreen(),
-    DetailScreen.routeName: (context) => DetailScreen()
+    DetailScreen.routeName: (context) => const DetailScreen()
   };
 
   @override
