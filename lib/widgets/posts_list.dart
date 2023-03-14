@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:wasteagram/models/food_waste_post.dart';
 import 'package:wasteagram/screens/detail_screen.dart';
 
+import 'post_card.dart';
+
 class PostsList extends StatefulWidget {
   @override
   State<PostsList> createState() => _PostsListState();
@@ -24,21 +26,7 @@ class _PostsListState extends State<PostsList> {
             itemBuilder: (context, index) {
               FoodWastePost post = FoodWastePost.fromFirestore(
                   snapshot.data!.docs[index].data() as Map);
-              return Card(
-                child: Semantics(
-                  label: 'A card for a Wasteagram post with date and number of '
-                      'wasted items.',
-                  onTapHint: 'Shows details for the selected post.',
-                  child: ListTile(
-                    title: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
-                    trailing: Text(post.quantity.toString()),
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(DetailScreen.routeName, arguments: post);
-                    },
-                  ),
-                ),
-              );
+              return PostCard(post: post);
             },
           );
         } else if (snapshot.hasData && snapshot.data!.docs.isEmpty) {
