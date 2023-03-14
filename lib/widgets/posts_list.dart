@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:wasteagram/models/food_waste_post.dart';
-import 'package:wasteagram/screens/detail_screen.dart';
 
+import '../models/food_waste_post.dart';
 import 'post_card.dart';
 
 class PostsList extends StatefulWidget {
@@ -26,6 +24,7 @@ class _PostsListState extends State<PostsList> {
             itemBuilder: (context, index) {
               FoodWastePost post = FoodWastePost.fromFirestore(
                   snapshot.data!.docs[index].data() as Map);
+
               return PostCard(post: post);
             },
           );

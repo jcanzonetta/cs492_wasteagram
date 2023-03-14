@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -43,7 +44,22 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Wasteagram')),
+      appBar: AppBar(
+        title: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              num totalWasted = 0;
+              if (snapshot.hasData) {
+                for (var post in snapshot.data!.docs) {
+                  totalWasted += post['quantity'];
+                }
+                return Text('Wasteagram - $totalWasted');
+              } else {
+                return const Text('Wasteagram - Loading...');
+              }
+            }),
+      ),
       body: PostsList(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(

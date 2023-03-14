@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'package:wasteagram/main.dart' as app;
-import 'package:wasteagram/widgets/food_waste_image.dart';
 import 'package:wasteagram/widgets/post_card.dart';
 
 void main() {
