@@ -19,9 +19,11 @@ class DetailScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Wasteagram')),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(DateFormat.yMMMMEEEEd().format(post.date!)),
+            ),
           ),
           FoodWasteImage(post: post),
           Padding(
