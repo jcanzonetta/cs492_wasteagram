@@ -32,7 +32,7 @@ class NumberFormField extends StatelessWidget {
             },
             validator: (newValue) {
               if (newValue?.isEmpty ?? true) {
-                return 'Please enter the number of food items wated.';
+                return 'Please enter the number of food items wasted.';
               } else if (int.parse(newValue!) <= 0) {
                 return 'The number of itmes wasted must be greater than 0.';
               } else {
