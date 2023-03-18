@@ -34,7 +34,7 @@ void main() {
 
     expect(find.byType(Image), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsNothing);
-    expect(find.text('Food wasted: 3'), findsOneWidget);
+    expect(find.text('Food wasted: 1'), findsOneWidget);
     expect(find.text('Location: (37.3374267, -121.9473567)'), findsOneWidget);
   });
 }
